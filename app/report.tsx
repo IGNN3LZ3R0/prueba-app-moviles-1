@@ -15,12 +15,8 @@ const categorizeExpenses = (expenses: any[]) => {
 
     if (desc.includes('comida') || desc.includes('cena') || desc.includes('almuerzo') || desc.includes('restaurante')) {
       category = 'Comida';
-    } else if (desc.includes('super') || desc.includes('mercado')) {
-      category = 'Supermercado';
     } else if (desc.includes('uber') || desc.includes('taxi') || desc.includes('transporte')) {
       category = 'Transporte';
-    } else if (desc.includes('café') || desc.includes('cafetería')) {
-      category = 'Café';
     } else if (desc.includes('restaurante')) {
       category = 'Restaurantes';
     }
