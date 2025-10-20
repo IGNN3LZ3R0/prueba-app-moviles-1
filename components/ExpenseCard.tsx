@@ -12,7 +12,7 @@ export default function ExpenseCard({ expense, onPress }: ExpenseCardProps) {
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={onPress ? 0.7 : 1}
-      className="bg-white p-4 mb-3 rounded-lg shadow-sm border border-gray-200"
+      className="bg-white p-4 mb-3 rounded-xl shadow-sm border border-gray-100"
     >
       <View className="flex-row justify-between items-start mb-2">
         <Text className="text-lg font-bold text-gray-800 flex-1">

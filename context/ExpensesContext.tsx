@@ -2,50 +2,50 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import { Expense, ExpensesContextType } from '../types/expense.types';
 import { saveExpenses, loadExpenses } from '../utils/storage';
 
-const ExpensesContext = createContext<ExpensesContextType | undefined>(undefined);
+const ContextoGastos = createContext<ExpensesContextType | undefined>(undefined);
 
-export const ExpensesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [expenses, setExpenses] = useState<Expense[]>([]);
-  const [loading, setLoading] = useState(true);
+export const ProveedorGastos: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [gastos, setGastos] = useState<Expense[]>([]);
+    const [cargando, setCargando] = useState(true);
 
-  useEffect(() => {
-    loadExpensesFromStorage();
-  }, []);
+    useEffect(() => {
+        cargarGastosDeAlmacenamiento();
+    }, []);
 
-  const loadExpensesFromStorage = async () => {
-    try {
-      setLoading(true);
-      const loaded = await loadExpenses();
-      setExpenses(loaded);
-    } catch (error) {
-      console.error('Error loading expenses:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const cargarGastosDeAlmacenamiento = async () => {
+        try {
+            setCargando(true);
+            const gastosGuardados = await loadExpenses();
+            setGastos(gastosGuardados);
+        } catch (error) {
+            console.error('Error al cargar los gastos:', error);
+        } finally {
+            setCargando(false);
+        }
+    };
 
-  const addExpense = async (expense: Expense): Promise<void> => {
-    try {
-      const newExpenses = [...expenses, expense];
-      setExpenses(newExpenses);
-      await saveExpenses(newExpenses);
-    } catch (error) {
-      console.error('Error adding expense:', error);
-      throw error;
-    }
-  };
+    const agregarGasto = async (gasto: Expense): Promise<void> => {
+        try {
+            const nuevosGastos = [...gastos, gasto];
+            setGastos(nuevosGastos);
+            await saveExpenses(nuevosGastos);
+        } catch (error) {
+            console.error('Error al agregar el gasto:', error);
+            throw error;
+        }
+    };
 
-  return (
-    <ExpensesContext.Provider value={{ expenses, addExpense, loading }}>
-      {children}
-    </ExpensesContext.Provider>
-  );
+    return (
+        <ContextoGastos.Provider value={{ expenses: gastos, addExpense: agregarGasto, loading: cargando }}>
+            {children}
+        </ContextoGastos.Provider>
+    );
 };
 
-export const useExpenses = (): ExpensesContextType => {
-  const context = useContext(ExpensesContext);
-  if (!context) {
-    throw new Error('useExpenses must be used within ExpensesProvider');
-  }
-  return context;
+export const useGastos = (): ExpensesContextType => {
+    const contexto = useContext(ContextoGastos);
+    if (!contexto) {
+        throw new Error('useGastos debe ser usado dentro de ProveedorGastos');
+    }
+    return contexto;
 };

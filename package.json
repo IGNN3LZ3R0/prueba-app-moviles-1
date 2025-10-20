@@ -47,6 +47,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@types/react": "~19.1.0",
+    "babel-preset-expo": "^54.0.4",
     "eslint": "^9.38.0",
     "eslint-config-expo": "~10.0.0",
     "typescript": "~5.9.2"
